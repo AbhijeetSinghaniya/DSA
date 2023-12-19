@@ -1,6 +1,7 @@
 class Solution
 {
-    void dfs(int node,vector<vector<int>> adj,vector<int>& vis,stack<int>& st){
+    // Pass adj by reference to avoid TLE
+    void dfs(int node,vector<vector<int>>& adj,vector<int>& vis,stack<int>& st){
         vis[node] = 1;
         for(auto it : adj[node]){
             if(!vis[it]){
@@ -9,7 +10,9 @@ class Solution
         }
         st.push(node);
     }
-    void dfsT(int node,vector<int> adjT[],vector<int>& vis){
+
+    // Pass adj by reference to avoid TLE
+    void dfsT(int node,vector<vector<int>>& adjT,vector<int>& vis){
         vis[node] = 1;
         for(auto it : adjT[node]){
             if(!vis[it]){
@@ -27,7 +30,8 @@ class Solution
             if(!vis[i]) dfs(i,adj,vis,st);
         }
         
-        vector<int> adjT[V];    
+        vector<vector<int>> adjT(V);
+        
         for(int i=0;i<V;i++){
             vis[i] = 0;
             for(auto it : adj[i]){
@@ -39,7 +43,8 @@ class Solution
         int scc = 0;
         while(!st.empty()){
             int node = st.top();
-            st.pop();            
+            st.pop();
+            
             if(!vis[node]){
                 scc++;
                 dfsT(node,adjT,vis);
