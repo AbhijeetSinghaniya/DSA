@@ -1,0 +1,44 @@
+class Solution {
+public:
+    string predictPartyVictory(string str) {
+        int tr=0,td = 0;
+        int n = str.size();
+        queue<char> q;
+        for(int i=0;i<n;i++){
+            if(str[i] == 'R') tr++;
+            else td++;
+            q.push(str[i]);
+        }
+
+        int rc=0,dc=0;
+        while(true){
+            if(q.front() == 'R'){
+                if(dc == 0){
+                    rc++;
+                    q.push(q.front());
+                    q.pop();
+                }
+                else {
+                    dc--;
+                    tr--;
+                    q.pop();
+                }
+            }
+            else{
+                if(rc == 0){
+                    dc++;
+                    q.push(q.front());
+                    q.pop();
+                }
+                else {
+                    rc--;
+                    td--;
+                    q.pop();
+                }
+            }
+            if(tr == 0) return "Dire";
+            if(td == 0) return "Radiant";
+        }
+        return "Radiant"; //will never run
+    }
+};
